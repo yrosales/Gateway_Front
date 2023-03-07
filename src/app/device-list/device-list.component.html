@@ -1,5 +1,5 @@
 <ul>
   <li *ngFor="let elemento of devices">
-    uid:{{elemento.uid}} vendor:{{elemento.vendor}} created: {{elemento.created}} 
+    uid:{{elemento.uid}} vendor:{{elemento.vendor}} created: {{elemento.created | date:"dd/MM/yyyy"}} 
   </li>
 </ul>
