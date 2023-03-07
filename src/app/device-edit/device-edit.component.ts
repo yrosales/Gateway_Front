@@ -24,12 +24,7 @@ export class DeviceEditComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.form.value);
-    const formData: any = new FormData();
-    formData.append('uid', this.form.get('uid').value);
-    formData.append('vendor', this.form.get('vendor').value);
-    formData.append('created', this.form.get('created').value);
-    this.formData.emit(formData);
+    this.formData.emit(this.form.value);
   }
 
 }

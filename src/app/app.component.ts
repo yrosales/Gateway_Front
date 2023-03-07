@@ -1,47 +1,77 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { GatewaysService } from './gateways.service';
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { GatewaysService } from "./gateways.service";
+import { Device } from "./models/device";
+import { Gateway } from "./models/gateway";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.sass"],
 })
-export class AppComponent implements OnInit, OnChanges{
-
-  title = 'gateways';
+export class AppComponent implements OnInit {
+  title = "gateways";
   $gateways: Observable<any>;
-  gateways: any[];
-  selectedGateway: any;
-  selectedGatewayDevices: any[];
+  gateways: Gateway[];
+  selectedGateway: Gateway;
+  selectedGatewayDevices: Device[];
 
-  constructor(private gatewaysService: GatewaysService){
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getGateways();
-  }
+  constructor(
+    private gatewaysService: GatewaysService,
+    private detect: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.$gateways = this.gatewaysService.getGateways();
-    this.selectedGateway = this.gateways[0];
-    this.selectedGatewayDevices = this.gateways[0].devices;
+    this.gatewaysService.getGateways().subscribe((resp) => {
+      this.gateways = resp;
+      this.selectedGateway = this.gateways[0];
+      this.selectedGatewayDevices = this.gateways[0].devices;
+    });
   }
 
-  getGateways(): void {
-    this.gatewaysService.getGateways();
+  private getGateways() {
+    this.gatewaysService.getGateways().subscribe((resp) => {
+      this.gateways = resp;
+      this.selectedGatewayDevices = this.gateways.find(
+        (item) => item.serial == this.selectedGateway.serial
+      ).devices;
+      this.detect.detectChanges;
+    });
   }
 
-  addGateway(formData: any): void {
-    this.gatewaysService.addGateway(formData);
-    this.$gateways = this.gatewaysService.getGateways();
+  addGateway(gateway: Gateway): void {
+    this.gatewaysService.addGateway(gateway).subscribe(
+      (response) => {
+        console.log(response);
+        this.getGateways();
+      },
+      (error) => console.log(error)
+    );
   }
 
-  addDevice(formData: any): void {
-    this.gatewaysService.addDevice(formData, this.selectedGateway.serial);
-    this.$gateways = this.gatewaysService.getGateways();
+  addDevice(device: Device): void {
+    const gateway: Gateway = {
+      serial: this.selectedGateway.serial,
+      name: this.selectedGateway.name,
+      address: this.selectedGateway.address,
+    };
+    const newDevice: Device = {
+      uid: device.uid,
+      vendor: device.vendor,
+      created: device.created,
+      gateway: gateway,
+    };
+
+    this.gatewaysService.addDevice(newDevice).subscribe(
+      (response) => {
+        console.log(response);
+        this.getGateways();
+      },
+      (error) => console.log(error)
+    );
   }
 
-  showDevices(elemento: any): void {
+  showDevices(elemento: Gateway): void {
     this.selectedGateway = elemento;
     this.selectedGatewayDevices = elemento.devices;
   }

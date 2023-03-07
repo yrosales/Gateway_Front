@@ -1,7 +1,7 @@
 <p>Gateways</p>
 <app-gateway-edit (formData)="(addGateway($event))"></app-gateway-edit>
 <ul>
-  <li *ngFor="let elemento of $gateways|async" (click)="showDevices(elemento)" style="cursor: pointer;">
+  <li *ngFor="let elemento of gateways" (click)="showDevices(elemento)" style="cursor: pointer;">
     serial:{{elemento.serial}} name:{{elemento.name}} address: {{elemento.address}} 
   </li>
 </ul>

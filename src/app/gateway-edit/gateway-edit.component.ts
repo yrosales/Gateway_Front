@@ -25,12 +25,7 @@ export class GatewayEditComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.form.value);
-    const formData: any = new FormData();
-    formData.append('serial', this.form.get('serial').value);
-    formData.append('name', this.form.get('name').value);
-    formData.append('address', this.form.get('address').value);
-    this.formData.emit(formData);
+    this.formData.emit(this.form.value);
   }
 
 }
