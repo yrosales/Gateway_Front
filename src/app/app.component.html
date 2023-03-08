@@ -1,10 +1,42 @@
-<p>Gateways</p>
-<app-gateway-edit (formData)="(addGateway($event))"></app-gateway-edit>
-<ul>
-  <li *ngFor="let elemento of gateways" (click)="showDevices(elemento)" style="cursor: pointer;">
-    serial:{{elemento.serial}} name:{{elemento.name}} address: {{elemento.address}} 
-  </li>
-</ul>
-<p>Devices</p>
-<app-device-edit (formData)="(addDevice($event))"></app-device-edit>
-<app-device-list [devices]="selectedGatewayDevices"></app-device-list>
+<div class="container card mb-2">
+  <h1 class="card-title">Gateways</h1>
+  <app-gateway-edit (formData)="addGateway($event)"></app-gateway-edit>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 30%">Serial</th>
+        <th style="width: 30%">Name</th>
+        <th style="width: 30%">Address</th>
+        <th style="width: 10%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let elemento of gateways"
+        (click)="showDevices(elemento)"
+        style="cursor: pointer"
+      >
+        <td>{{ elemento.serial }}</td>
+        <td>{{ elemento.name }}</td>
+        <td>{{ elemento.address }}</td>
+        <td style="white-space: nowrap">
+          <button class="btn btn-sm btn-danger btn-delete-user">
+            <!--span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span-->
+            <span>Delete</span>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="!gateways">
+        <td colspan="4" class="text-center">
+          <span class="spinner-border spinner-border-lg align-center"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container card">
+  <h1 class="card-title">Devices</h1>
+  <app-device-edit (formData)="addDevice($event)"></app-device-edit>
+  <app-device-list [devices]="selectedGatewayDevices"></app-device-list>
+</div>

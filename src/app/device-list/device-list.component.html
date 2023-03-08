@@ -1,5 +1,28 @@
-<ul>
-  <li *ngFor="let elemento of devices">
-    uid:{{elemento.uid}} vendor:{{elemento.vendor}} created: {{elemento.created | date:"dd/MM/yyyy"}} 
-  </li>
-</ul>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 30%">UID</th>
+      <th style="width: 30%">Vendor</th>
+      <th style="width: 30%">Created</th>
+      <th style="width: 10%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let elemento of devices" style="cursor: pointer">
+      <td>{{ elemento.uid }}</td>
+      <td>{{ elemento.vendor }}</td>
+      <td>{{ elemento.created | date : "dd/MM/yyyy"}}</td>
+      <td style="white-space: nowrap">
+        <button class="btn btn-sm btn-danger btn-delete-user">
+          <!--span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span-->
+          <span>Delete</span>
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="!devices">
+      <td colspan="4" class="text-center">
+        <span class="spinner-border spinner-border-lg align-center"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>

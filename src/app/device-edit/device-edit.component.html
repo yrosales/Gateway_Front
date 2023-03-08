@@ -1,18 +1,33 @@
-<div class="container">
+<div class="container card mb-2 py-4">
   <form [formGroup]="form">
-
+    <div class="d-flex flex-row justify-content-between align-items-center">
       <div class="form-group input-group-lg">
-        <label for="uid">UID: </label><input class="form-control" placeholder="UID" formControlName="uid">
+        <label for="uid">UID: </label
+        ><input class="form-control" placeholder="UID" formControlName="uid" />
       </div>
       <div class="form-group input-group-lg">
-        <label for="vendor">Vendor: </label><input class="form-control" placeholder="Vendor" formControlName="vendor">
+        <label for="vendor">Vendor: </label
+        ><input
+          class="form-control"
+          placeholder="Vendor"
+          formControlName="vendor"
+        />
       </div>
       <div class="form-group input-group-lg">
-        <label for="created">Created: </label><input class="form-control" placeholder="Created" type="date" formControlName="created">
-    </div>
+        <label for="created">Created: </label
+        ><input
+          class="form-control"
+          placeholder="Created"
+          type="date"
+          formControlName="created"
+        />
+      </div>
 
       <div class="form-group">
-          <button class="btn btn-danger btn-block btn-lg" (click)="submitForm()">Create</button>
+        <button class="btn btn-primary btn-block" (click)="submitForm()">
+          Create
+        </button>
       </div>
+    </div>
   </form>
 </div>
