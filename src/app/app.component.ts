@@ -36,7 +36,8 @@ export class AppComponent implements OnInit {
         (item) => item.serial == this.selectedGateway.serial
       ).devices;
       this.detect.detectChanges;
-    });
+    },
+    (error) => console.log(error));
   }
 
   addGateway(gateway: Gateway): void {
@@ -45,7 +46,7 @@ export class AppComponent implements OnInit {
         console.log(response);
         this.getGateways();
       },
-      (error) => console.log(error)
+      (error) => console.log('error')
     );
   }
 
