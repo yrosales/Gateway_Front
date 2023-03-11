@@ -15,6 +15,7 @@
         *ngFor="let elemento of gateways"
         (click)="showDevices(elemento)"
         style="cursor: pointer"
+        [ngClass]="{'selected': elemento.serial === selectedGateway.serial}"
       >
         <td>{{ elemento.serial }}</td>
         <td>{{ elemento.name }}</td>
